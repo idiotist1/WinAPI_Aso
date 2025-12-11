@@ -1,22 +1,10 @@
 {
   "Version": 1,
-  "WorkspaceRootPath": "C:\\Users\\admin\\Desktop\\WinAPI\\WinApiLecture\\",
+  "WorkspaceRootPath": "C:\\Users\\admin\\Documents\\GitHub\\WinAPI_Aso\\WinApiLecture\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{0D620EA8-6040-4E40-90FF-031D87A24BCE}|Client\\Client.vcxproj|C:\\Users\\admin\\Desktop\\WinAPI\\WinApiLecture\\Client\\Main.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
+      "AbsoluteMoniker": "D:0:0:{0D620EA8-6040-4E40-90FF-031D87A24BCE}|Client\\Client.vcxproj|C:\\Users\\admin\\Documents\\GitHub\\WinAPI_Aso\\WinApiLecture\\Client\\Main.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
       "RelativeMoniker": "D:0:0:{0D620EA8-6040-4E40-90FF-031D87A24BCE}|Client\\Client.vcxproj|solutionrelative:Client\\Main.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{0D620EA8-6040-4E40-90FF-031D87A24BCE}|Client\\Client.vcxproj|C:\\Users\\admin\\Desktop\\WinAPI\\WinApiLecture\\Client\\Client.rc||{177559E0-D141-11D0-92DF-00A0C9138C45}|,   b e g i n       ) \u008D 2$  \u0022     ",
-      "RelativeMoniker": "D:0:0:{0D620EA8-6040-4E40-90FF-031D87A24BCE}|Client\\Client.vcxproj|solutionrelative:Client\\Client.rc||{177559E0-D141-11D0-92DF-00A0C9138C45}|,   b e g i n       ) \u008D 2$  \u0022     "
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{0D620EA8-6040-4E40-90FF-031D87A24BCE}|Client\\Client.vcxproj|C:\\Users\\admin\\Desktop\\WinAPI\\WinApiLecture\\Client\\Client.rc||{177559E0-D141-11D0-92DF-00A0C9138C45}|,   b e g i n       % \u0087 2$  \u0022     ",
-      "RelativeMoniker": "D:0:0:{0D620EA8-6040-4E40-90FF-031D87A24BCE}|Client\\Client.vcxproj|solutionrelative:Client\\Client.rc||{177559E0-D141-11D0-92DF-00A0C9138C45}|,   b e g i n       % \u0087 2$  \u0022     "
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{0D620EA8-6040-4E40-90FF-031D87A24BCE}|Client\\Client.vcxproj|C:\\Users\\admin\\Desktop\\WinAPI\\WinApiLecture\\Client\\Client.rc||{177559E0-D141-11D0-92DF-00A0C9138C45}|,   b e g i n       $ \u008D 2$  \u0022     ",
-      "RelativeMoniker": "D:0:0:{0D620EA8-6040-4E40-90FF-031D87A24BCE}|Client\\Client.vcxproj|solutionrelative:Client\\Client.rc||{177559E0-D141-11D0-92DF-00A0C9138C45}|,   b e g i n       $ \u008D 2$  \u0022     "
     }
   ],
   "DocumentGroupContainers": [
@@ -26,50 +14,17 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 3,
+          "SelectedChildIndex": 0,
           "Children": [
-            {
-              "$type": "Document",
-              "DocumentIndex": 3,
-              "Title": "Client.rc - IDC_CLIENT - Menu",
-              "DocumentMoniker": "C:\\Users\\admin\\Desktop\\WinAPI\\WinApiLecture\\Client\\Client.rc",
-              "RelativeDocumentMoniker": "Client\\Client.rc",
-              "ToolTip": "C:\\Users\\admin\\Desktop\\WinAPI\\WinApiLecture\\Client\\Client.rc - IDC_CLIENT - Menu",
-              "RelativeToolTip": "Client\\Client.rc - IDC_CLIENT - Menu",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001005|",
-              "WhenOpened": "2025-12-04T16:16:56.238Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 2,
-              "Title": "Client.rc - IDD_ABOUTBOX - Dialog",
-              "DocumentMoniker": "C:\\Users\\admin\\Desktop\\WinAPI\\WinApiLecture\\Client\\Client.rc",
-              "RelativeDocumentMoniker": "Client\\Client.rc",
-              "ToolTip": "C:\\Users\\admin\\Desktop\\WinAPI\\WinApiLecture\\Client\\Client.rc - IDD_ABOUTBOX - Dialog",
-              "RelativeToolTip": "Client\\Client.rc - IDD_ABOUTBOX - Dialog",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001005|",
-              "WhenOpened": "2025-12-04T16:16:52.998Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 1,
-              "Title": "Client.rc - IDC_CLIENT - Accelerator",
-              "DocumentMoniker": "C:\\Users\\admin\\Desktop\\WinAPI\\WinApiLecture\\Client\\Client.rc",
-              "RelativeDocumentMoniker": "Client\\Client.rc",
-              "ToolTip": "C:\\Users\\admin\\Desktop\\WinAPI\\WinApiLecture\\Client\\Client.rc - IDC_CLIENT - Accelerator",
-              "RelativeToolTip": "Client\\Client.rc - IDC_CLIENT - Accelerator",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001005|",
-              "WhenOpened": "2025-12-03T14:57:02.115Z"
-            },
             {
               "$type": "Document",
               "DocumentIndex": 0,
               "Title": "Main.cpp",
-              "DocumentMoniker": "C:\\Users\\admin\\Desktop\\WinAPI\\WinApiLecture\\Client\\Main.cpp",
+              "DocumentMoniker": "C:\\Users\\admin\\Documents\\GitHub\\WinAPI_Aso\\WinApiLecture\\Client\\Main.cpp",
               "RelativeDocumentMoniker": "Client\\Main.cpp",
-              "ToolTip": "C:\\Users\\admin\\Desktop\\WinAPI\\WinApiLecture\\Client\\Main.cpp",
+              "ToolTip": "C:\\Users\\admin\\Documents\\GitHub\\WinAPI_Aso\\WinApiLecture\\Client\\Main.cpp",
               "RelativeToolTip": "Client\\Main.cpp",
-              "ViewState": "AgIAAL8AAAAAAAAAAAAIwM4AAAAAAAAAAAAAAA==",
+              "ViewState": "AgIAAGMAAAAAAAAAAAAAAG4AAAAiAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000677|",
               "WhenOpened": "2025-12-02T15:35:35.785Z",
               "EditorCaption": ""

@@ -5,6 +5,7 @@
 
 // 전역 변수:
 HINSTANCE hInst;                                // 현재 인스턴스입니다.
+HWND g_hWnd; // 메인 윈도우 핸들
 WCHAR szTitle[MAX_LOADSTRING];                  // 제목 표시줄 텍스트입니다.
 WCHAR szWindowClass[MAX_LOADSTRING];            // 기본 창 클래스 이름입니다.
 
@@ -71,7 +72,12 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance, // 실행된 프로그램 포인
 	// 단축키 정보 불러오기(리소스뷰 -> Accelerator)
 	HACCEL hAccelTable = LoadAccelerators(hInstance, MAKEINTRESOURCE(IDC_CLIENT));
 
-	MSG msg; // 메세지르 받기위한 객체
+	MSG msg; // 메세지를 받기위한 객체
+
+	// 일정시간마다 함수를 호출시킴(윈도우 핸들, 이벤트 ID, 지연시간, 함수포인터)
+	// WM_TIMER를 발생시킨다. 지연시간이 0초여도 실행하는데 시간이 걸린다.
+	// KillTimer로 제거 해야한다.
+	SetTimer(g_hWnd, 10, 0, nullptr); 
 
 	// GetMessage
 	//- 프로그램 내부의 MessageQueue에 쌓여있는 메세지들을 꺼내본다. 
@@ -90,6 +96,9 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance, // 실행된 프로그램 포인
 		}
 	}
 
+	// Timer 제거
+	KillTimer(g_hWnd, 10);
+
 	return (int)msg.wParam;
 }
 
@@ -100,7 +109,6 @@ ATOM MyRegisterClass(HINSTANCE hInstance)
 	WNDCLASSEXW wcex;
 
 	wcex.cbSize = sizeof(WNDCLASSEX);
-
 	wcex.style = CS_HREDRAW | CS_VREDRAW;
 	wcex.lpfnWndProc = WndProc;
 	wcex.cbClsExtra = 0;
@@ -281,6 +289,14 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 		InvalidateRect(hWnd, nullptr, true);
 	}
 	break;
+
+	case WM_TIMER:
+
+	{
+
+	}
+
+		break;
 
 	// 마우스 오른쪽 버튼 땟을 떄
 	case WM_LBUTTONUP:
