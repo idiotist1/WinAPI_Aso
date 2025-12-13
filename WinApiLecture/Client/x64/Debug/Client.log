@@ -1,2 +1,7 @@
-﻿  Main.cpp
-  Client.vcxproj -> C:\Users\admin\Desktop\WinAPI\WinApiLecture\x64\Debug\Client.exe
+﻿  pch.cpp
+  CCore.cpp
+  CKeyMgr.cpp
+  CObject.cpp
+  main.cpp
+  코드를 생성하고 있습니다...
+  Client.vcxproj -> C:\Users\admin\Documents\GitHub\WinAPI_Aso\WinApiLecture\x64\Debug\Client.exe

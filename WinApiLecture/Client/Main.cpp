@@ -1,5 +1,8 @@
-﻿#include "framework.h"
+﻿#include "pch.h"
+#include "framework.h"
 #include "Client.h"
+#include "CCore.h"
+
 
 #define MAX_LOADSTRING 100
 
@@ -69,35 +72,63 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance, // 실행된 프로그램 포인
 		return FALSE;
 	}
 
+	// Core 초기화
+	if (FAILED(CCore::GetInst()->init(g_hWnd, POINT{ 1280, 720 })))
+	{
+		// 메세지박스 띄움
+		MessageBox(nullptr, L"Core 객체 초기화 실패", L"ERROR", MB_OK);
+		return FALSE;
+	}
+
+
 	// 단축키 정보 불러오기(리소스뷰 -> Accelerator)
 	HACCEL hAccelTable = LoadAccelerators(hInstance, MAKEINTRESOURCE(IDC_CLIENT));
 
 	MSG msg; // 메세지를 받기위한 객체
 
-	// 일정시간마다 함수를 호출시킴(윈도우 핸들, 이벤트 ID, 지연시간, 함수포인터)
-	// WM_TIMER를 발생시킨다. 지연시간이 0초여도 실행하는데 시간이 걸린다.
-	// KillTimer로 제거 해야한다.
-	SetTimer(g_hWnd, 10, 0, nullptr); 
-
 	// GetMessage
 	//- 프로그램 내부의 MessageQueue에 쌓여있는 메세지들을 꺼내본다. 
 	//- hwnd, lParam, message, pt, time, wParam 이런 정보들이 들어온다.
+	//- 메시지 큐에서 메세지가 없다면 무한정 대기(★)
 	//- msg.message == WM_QUIT 인 경우 false를 반환 -> 프로그램 종료
-	while (GetMessage(&msg, nullptr, 0, 0))
+
+	// * PeekMessage
+	//- PeekMessage는 메세지가 없어도 반환한다. PM_REMOVE를 넣으면 읽은 메세지를 제거한다.
+	//- 메세지 큐에 메세지가 있다면 true
+	//- 메세지 큐에 메세지가 없다면 false
+
+	// GetTickCount : 윈도우가 부팅된 이후 시간
+	// 이전 카운트
+
+	while (true)
 	{
-		// 단축키 확인 함수
-		if (!TranslateAccelerator(msg.hwnd, hAccelTable, &msg))
+		// 메세지가 있다면
+		if (PeekMessage(&msg, nullptr, 0, 0, PM_REMOVE))
 		{
-			// 전달된 메세지가 WM_KEYDOWN인지와 눌려진 키가 문자키인지 검사하고 
-			// 조건이 맞다면 WM_CHAR메시지르 만들어서 메시지큐에 덧붙임
-			TranslateMessage(&msg);
-			// 메시지를 윈도우 프로시저(WndProc 함수)로 보냄
-			DispatchMessage(&msg);
+			// 종료 메세지라면
+			if (WM_QUIT == msg.message)
+				break;
+
+			// 단축키 확인 함수
+			if (!TranslateAccelerator(msg.hwnd, hAccelTable, &msg))
+			{
+				// 전달된 메세지가 WM_KEYDOWN인지와 눌려진 키가 문자키인지 검사하고 
+				// 조건이 맞다면 WM_CHAR메시지를 만들어서 메시지큐에 덧붙임
+				TranslateMessage(&msg);
+				// 메시지를 윈도우 프로시저(WndProc 함수)로 보냄
+				DispatchMessage(&msg);
+			}
+		}
+		// 메세지가 발생하지 않는 대부분의 시간
+		else
+		{
+			
+			// Game 코드 수행
+			// 디자인 패턴
+			CCore::GetInst()->progress();
 		}
 	}
 
-	// Timer 제거
-	KillTimer(g_hWnd, 10);
 
 	return (int)msg.wParam;
 }
@@ -192,47 +223,6 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 		// HDC(Handle Device Context) 객체를 만든다.-> 그리기 객체 
 		HDC hdc = BeginPaint(hWnd, &ps);
 
-		// SOLID모양의 1px, 빨간색 펜 생성
-		HPEN hRedPen = CreatePen(PS_SOLID, 1, RGB(255, 0, 0));
-
-		// 파란색 브러쉬 생성
-		HBRUSH hBlueBrush = CreateSolidBrush(RGB(0, 0, 255));
-
-		// hdc에 hRedPen을 선택 기본펜 저장
-		HPEN hDefaultPen = (HPEN)SelectObject(hdc, hRedPen);
-
-		// hdc에 hBlueBrush 선택 기본 브러쉬 저장
-		HBRUSH hDefaultBrush = (HBRUSH)SelectObject(hdc, hBlueBrush);
-
-		if (bLbtnDown)
-		{
-			Rectangle(hdc,
-				g_ptLT.x,
-				g_ptLT.y,
-				g_ptRB.x,
-				g_ptRB.y);
-		}
-
-		for (size_t i = 0; i < g_vecInfo.size(); ++i)
-		{
-			Rectangle(hdc,
-				g_vecInfo[i].g_ptObjPos.x - g_vecInfo[i].g_ptObjScale.x / 2,
-				g_vecInfo[i].g_ptObjPos.y - g_vecInfo[i].g_ptObjScale.y / 2,
-				g_vecInfo[i].g_ptObjPos.x + g_vecInfo[i].g_ptObjScale.x / 2,
-				g_vecInfo[i].g_ptObjPos.y + g_vecInfo[i].g_ptObjScale.y / 2);
-		}
-
-		// 기본 펜을 다시 선택
-		SelectObject(hdc, hDefaultPen);
-
-		// 기본 브러쉬 다시 선택
-		SelectObject(hdc, hDefaultBrush);
-
-		// RedPen 제거
-		DeleteObject(hRedPen);
-
-		// BlueBrush 제거
-		DeleteObject(hBlueBrush);
 
 		// 그리기 종료
 		EndPaint(hWnd, &ps);
@@ -241,34 +231,7 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 	//키가 눌렸을때
 	case WM_KEYDOWN:
 	{
-		// 눌린 키는 wParam으로 들어온다. / lParam은 마우스
-		switch (wParam)
-		{
-			// 화살표 방향키
-		case VK_UP:
-			//g_ptObjPos.y -= 10;
-			InvalidateRect(hWnd, nullptr, true); //무효화 영역 강제 발생
-			break;
-		case VK_DOWN:
-			//g_ptObjPos.y += 10;
-			InvalidateRect(hWnd, nullptr, true); //무효화 영역 강제 발생
-			break;
-		case VK_RIGHT:
-			//g_ptObjPos.x += 10;
-			InvalidateRect(hWnd, nullptr, true); //무효화 영역 강제 발생
-			break;
-		case VK_LEFT:
-			//g_ptObjPos.x -= 10;
-			InvalidateRect(hWnd, nullptr, true); //무효화 영역 강제 발생
-			break;
-			//w키(대문자로 해야한다)
-		case 'W':
-			break;
 
-
-		default:
-			break;
-		}
 	}
 	break;
 	// 키를 땟을때
@@ -276,44 +239,14 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 		break;
 		// 마우스 왼쪽버튼 눌렀을때
 	case WM_LBUTTONDOWN:
-	{
-		g_ptLT.x = LOWORD(lParam); //마우스 x좌표
-		g_ptLT.y = HIWORD(lParam); //마우스 y좌표
-		bLbtnDown = true;
-	}
-	break;
-	case WM_MOUSEMOVE:
-	{
-		g_ptRB.x = LOWORD(lParam); //마우스 x좌표
-		g_ptRB.y = HIWORD(lParam); //마우스 y좌표
-		InvalidateRect(hWnd, nullptr, true);
-	}
-	break;
-
-	case WM_TIMER:
-
-	{
-
-	}
 
 		break;
+	case WM_MOUSEMOVE:
+		break;
 
-	// 마우스 오른쪽 버튼 땟을 떄
+		// 마우스 오른쪽 버튼 땟을 떄
 	case WM_LBUTTONUP:
-	{
-		tObjectInfo info = {};
-		info.g_ptObjPos.x = (g_ptLT.x + g_ptRB.x) / 2;
-		info.g_ptObjPos.y = (g_ptLT.y + g_ptRB.y) / 2;
-
-		info.g_ptObjScale.x = abs(g_ptLT.x - g_ptRB.x);
-		info.g_ptObjScale.y = abs(g_ptLT.y - g_ptRB.y);
-
-		g_vecInfo.push_back(info);
-
-		bLbtnDown = false;
-		InvalidateRect(hWnd, nullptr, true);
-	}
-	break;
+		break;
 
 	case WM_DESTROY:
 		// 메세지큐에 WM_QUIT를 보내는 함수
